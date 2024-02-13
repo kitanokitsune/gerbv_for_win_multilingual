@@ -1,0 +1,23 @@
+diff -uprN a/src/main.c b/src/main.c
+--- a/src/main.c	2023-05-25 23:48:03.000000000 +0900
++++ b/src/main.c	2023-06-23 15:34:57.557498300 +0900
+@@ -487,9 +487,18 @@ main(int argc, char *argv[])
+ 
+ #if ENABLE_NLS
+     setlocale(LC_ALL, "");
+-    bindtextdomain(PACKAGE, LOCALEDIR);
++/* Fix Unicode Path Issue on Windows: https://github.com/microsoft/vcpkg/issues/9854 */
+ # ifdef WIN32
++    const gchar *installdir = g_win32_get_package_installation_directory_of_module(NULL);
++    const gchar *localedir_utf8 = g_canonicalize_filename("share/locale", installdir);
++    const gchar *localedir_win_codepage = g_win32_locale_filename_from_utf8(localedir_utf8);
++    bindtextdomain(PACKAGE, localedir_win_codepage);
++    g_free(localedir_win_codepage);
++    g_free(localedir_utf8);
++    g_free(installdir);
+     bind_textdomain_codeset(PACKAGE, "UTF-8");
++# else
++    bindtextdomain(PACKAGE, LOCALEDIR);
+ # endif
+     textdomain(PACKAGE);
+ #endif

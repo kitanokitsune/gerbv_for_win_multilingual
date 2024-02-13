@@ -1,0 +1,104 @@
+diff -uprN a/src/gerb_file.c b/src/gerb_file.c
+--- a/src/gerb_file.c	2023-06-24 20:01:11.000000000 +0900
++++ b/src/gerb_file.c	2023-06-27 10:22:21.403594500 +0900
+@@ -326,7 +326,7 @@ gerb_find_file(char const * filename, ch
+ 	  dprintf("%s():  Tring to access \"%s\"\n", __FUNCTION__,
+ 		  complete_path);
+ 	  
+-	  if (access(complete_path, R_OK) != -1)
++	  if (g_access(complete_path, R_OK) != -1)
+ 	    break;
+ 	  
+ 	  g_free(complete_path);
+diff -uprN a/src/main.c b/src/main.c
+--- a/src/main.c	2023-06-27 10:21:46.888103700 +0900
++++ b/src/main.c	2023-06-27 10:23:14.131784900 +0900
+@@ -923,6 +923,9 @@ main(int argc, char *argv[])
+      */
+ 
+     if (project_filename) {
++#ifdef _WIN32
++    project_filename = g_locale_to_utf8 (project_filename, -1, NULL, NULL, NULL);
++#endif
+ 	dprintf(_("Loading project %s...\n"), project_filename);
+ 	/* calculate the absolute pathname to the project if the user
+ 	   used a relative path */
+@@ -939,6 +942,9 @@ main(int argc, char *argv[])
+ 	    main_open_project_from_filename (mainProject, project_filename);
+ 	    mainProject->path = g_path_get_dirname (project_filename);
+ 	}
++#ifdef _WIN32
++    g_free (project_filename);
++#endif
+     } else {
+     	gint loadedIndex = 0;
+ 	for(i = optind ; i < argc; i++) {
+diff -uprN a/src/project.c b/src/project.c
+--- a/src/project.c	2023-06-27 10:21:12.636247300 +0900
++++ b/src/project.c	2023-06-27 10:22:21.419217900 +0900
+@@ -26,7 +26,7 @@
+     \brief Routines for loading and saving project files.
+     \ingroup gerbv
+  */ 
+-
++#include <glib/gstdio.h>
+ 
+ #ifdef HAVE_CONFIG_H
+ #include "config.h"
+@@ -458,7 +458,7 @@ init_paths (char *argv0)
+   else
+     {
+       char *path, *p, *tmps;
+-      struct stat sb;
++      GStatBuf sb;
+       int r;
+       
+       tmps = getenv ("PATH");
+@@ -478,7 +478,7 @@ init_paths (char *argv0)
+                   exit (1);
+                 }
+               sprintf (tmps, "%s%s%s", p, GERBV_DIR_SEPARATOR_S, argv0);
+-              r = stat (tmps, &sb);
++              r = g_stat (tmps, &sb);
+               if (r == 0)
+                 {
+ 		  dprintf ("Found it:  \"%s\"\n", tmps);
+@@ -894,6 +894,29 @@ gerbv_file_version(scheme *sc, pointer a
+     return sc->NIL;
+ } /* gerbv_file_version */
+ 
++#ifdef _WIN32
++/** Wrapper of fopen() on Windows
++ * receive UTF-8 encoded filename and open it by fopen()
++ * which accepts the filename in system encode.
++ *
++ * Returns FILE pointer
++  */
++static
++FILE *
++_WIN32_FOPEN(const char *filename_utf8, const char *mode)
++{
++    FILE *fd;
++    gchar *filename_win_codepage;
++
++    filename_win_codepage = g_win32_locale_filename_from_utf8(filename_utf8);
++    fd = fopen(filename_win_codepage, mode);
++    g_free(filename_win_codepage);
++
++    return fd;
++}
++#define fopen(F,M) _WIN32_FOPEN(F,M)
++#endif
++
+ /** Checks whether the supplied file look like a gerbv project by
+  * reading the first line and checking if it contains gerbv-file-version
+  *
+@@ -982,7 +1005,7 @@ read_project_file(char const* filename)
+     current_file_version =
+ 		version_str_to_int(GERBV_DEFAULT_PROJECT_FILE_VERSION);
+ 
+-    if (stat(filename, &stat_info) || !S_ISREG(stat_info.st_mode)) {
++    if (g_stat(filename, &stat_info) || !S_ISREG(stat_info.st_mode)) {
+ 	GERB_MESSAGE(_("Failed to read %s"), filename);
+ 
+ 	return NULL;

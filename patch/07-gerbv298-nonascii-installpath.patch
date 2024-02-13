@@ -1,0 +1,60 @@
+diff -uprN a/src/main.c b/src/main.c
+--- a/src/main.c	2023-06-27 09:19:32.223771200 +0900
++++ b/src/main.c	2023-06-27 09:28:25.874881500 +0900
+@@ -514,7 +514,11 @@ main(int argc, char *argv[])
+     screen.unit = GERBV_DEFAULT_UNIT;
+     
+     mainProject = gerbv_create_project();
++#ifdef _WIN32
++    mainProject->execname = g_strdup("");
++#else
+     mainProject->execname = g_strdup(argv[0]);
++#endif
+     mainProject->execpath = g_path_get_dirname(argv[0]);
+ 
+     /* Add "fallback" directory with settings schema file from this
+diff -uprN a/src/project.c b/src/project.c
+--- a/src/project.c	2023-06-27 09:27:06.787200400 +0900
++++ b/src/project.c	2023-06-27 09:29:09.451108900 +0900
+@@ -461,7 +461,7 @@ init_paths (char *argv0)
+       GStatBuf sb;
+       int r;
+       
+-      tmps = getenv ("PATH");
++      tmps = g_getenv ("PATH");
+       
+       if (tmps != NULL)
+         {
+@@ -516,7 +516,32 @@ init_paths (char *argv0)
+       /* we have failed to find out anything from argv[0] so fall back to the original
+        * install prefix
+        */
++#ifdef _WIN32
++       const gchar *moduledir = g_win32_get_package_installation_directory_of_module(NULL);
++       const gchar *modbindir = g_canonicalize_filename("bin", moduledir);
++       const gchar *modlibdir = g_canonicalize_filename("lib", moduledir);
++       GStatBuf sb;
++       if (g_stat(modbindir, &sb) == 0)
++       {
++           bindir = modbindir;
++           g_free(moduledir);
++           g_free(modlibdir);
++       }
++       else if (g_stat(modlibdir, &sb) == 0)
++       {
++           bindir = modlibdir;
++           g_free(moduledir);
++           g_free(modbindir);
++       }
++       else
++       {
++           bindir = moduledir;
++           g_free(modbindir);
++           g_free(modlibdir);
++       }
++#else
+        bindir = strdup (BINDIR);
++#endif
+     }
+     
+   /* now find the path to exec_prefix */
