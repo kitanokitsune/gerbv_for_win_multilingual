@@ -1,7 +1,7 @@
 # Gerbv-2.10.0 for windows multilingual -- build tools
 ---------------------------------------------
 ## Gerbv-2.10.0 binaries
-Please see [Releases](https://github.com/kitanokitsune/gerbv_for_win_multilingual/releases/tag/v2.10.0) pages.
+Executable binaries are in [Releases](https://github.com/kitanokitsune/gerbv_for_win_multilingual/releases/tag/v2.10.0) pages.
 
 ## Build prerequisites
 If you want to build gerbv yourself, the followings are required.
