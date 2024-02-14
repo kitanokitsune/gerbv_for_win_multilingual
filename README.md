@@ -1,6 +1,10 @@
 # Gerbv-2.10.0 for windows in multilingual -- build tools
 ---------------------------------------------
-## Prerequisites
+## Gerbv-2.10.0 binaries
+Please see [Releases](https://github.com/kitanokitsune/gerbv_for_win_multilingual/releases/tag/v2.10.0) pages.
+
+## Build prerequisites
+If you want to build gerbv yourself, the followings are required.
 + MSYS2 + binutils + gcc ( [i686-8.1.0-release-win32-dwarf-rt_v6-rev0](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/8.1.0/threads-win32/dwarf/i686-8.1.0-release-win32-dwarf-rt_v6-rev0.7z)  / [x86_64-8.1.0-release-win32-seh-rt_v6-rev0](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/x86_64-8.1.0-release-win32-seh-rt_v6-rev0.7z) ) + etc.
 + gerbv-2.10.0.tar.gz source file
 + dxflib-3.26.4-src.tar.gz [source file](https://qcad.org/en/dxflib-downloads)
