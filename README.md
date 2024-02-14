@@ -1,4 +1,4 @@
-# Gerbv-2.10.0 for windows in multilingual -- build tools
+# Gerbv-2.10.0 for windows multilingual -- build tools
 ---------------------------------------------
 ## Gerbv-2.10.0 binaries
 Please see [Releases](https://github.com/kitanokitsune/gerbv_for_win_multilingual/releases/tag/v2.10.0) pages.
