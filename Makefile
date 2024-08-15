@@ -23,6 +23,7 @@ JOBS ?= auto
 # /---------------------/
 
 GERBV_VERSION ?= 2.10.0
+GERBV_VERSION_SUFFIX ?= _240815
 
 GERBV_PKG ?= gerbv-$(GERBV_VERSION).tar.gz
 GERBV_SRC_DIR ?= gerbv-$(GERBV_VERSION)
@@ -158,7 +159,7 @@ patch:
 	@echo "#!/bin/bash" > $(GERBV_SRC_DIR)/utils/git-version-gen.sh
 	@echo "set -e" >> $(GERBV_SRC_DIR)/utils/git-version-gen.sh
 	@echo 'PREFIX="$${1}"' >> $(GERBV_SRC_DIR)/utils/git-version-gen.sh
-	@echo 'echo -n "$${PREFIX}"' >> $(GERBV_SRC_DIR)/utils/git-version-gen.sh
+	@echo 'echo -n "$${PREFIX}${GERBV_VERSION_SUFFIX}"' >> $(GERBV_SRC_DIR)/utils/git-version-gen.sh
 
 
 autogen: 
