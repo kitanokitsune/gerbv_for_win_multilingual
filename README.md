@@ -1,7 +1,14 @@
 # Gerbv-2.10.0 for windows multilingual -- build tools
 ---------------------------------------------
 ## Gerbv-2.10.0 binaries
-Executable binaries are in [Releases](https://github.com/kitanokitsune/gerbv_for_win_multilingual/releases/tag/v2.10.0) pages.
+Executable binaries are in [Releases](https://github.com/kitanokitsune/gerbv_for_win_multilingual/releases) pages.
+
+## Supported features
+[These patches](./patch) are applied.
++ Support non-ASCII path and filename
++ Support slotted hole (patch from [sourceforge](https://sourceforge.net/p/gerbv/bugs/258/))
+
+<img src="./route_slot.png" width="600px" alt="route_slot" title="route_slot">
 
 ## Build prerequisites
 If you want to build __gerbv__ yourself, the followings are required.
