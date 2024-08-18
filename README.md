@@ -1,7 +1,8 @@
 # Gerbv-2.10.0 for windows multilingual -- build tools
 ---------------------------------------------
-## Gerbv-2.10.0 binaries
-Executable binaries are in [Releases](https://github.com/kitanokitsune/gerbv_for_win_multilingual/releases) pages.
+## What is this
+This is a build tool for [Gerbv-2.10.0](https://github.com/gerbv/gerbv) executable on MS-Windows.  
+Also executable binaries are in [Releases](https://github.com/kitanokitsune/gerbv_for_win_multilingual/releases) pages.
 
 ## Supported features
 [These patches](./patch) are applied.
