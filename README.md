@@ -23,3 +23,9 @@ If you want to build __gerbv__ yourself, the followings are required.
 2. Put **dxflib-3.26.4-src.tar.gz** and **gerbv-2.10.0.tar.gz** into the above directory.
 3. Edit **Makefile** as you need.
 4. Execute command `make` in the directory.
+
+## Localization
+1. Copy **gerbv.pot** to a file named ***&lt;lang&gt;***__.po__, where *&lt;lang&gt;* is a *[Language Code](https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html)*.
+2. Edit translations in ***&lt;lang&gt;***__.po__ and save it using UTF-8 encoding.
+3. Execute __msgfmt__ ***&lt;lang&gt;***__.po -o gerbv.mo__ in MSYS2.
+4. Copy __gerbv.mo__ into &lt;*gerb_folder*&gt;\\share\\locale\\&lt;*lang*&gt;\\LC_MESSAGES\\.
