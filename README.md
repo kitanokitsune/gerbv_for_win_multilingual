@@ -24,7 +24,7 @@ If you want to build __gerbv__ yourself, the followings are required.
 3. Edit **Makefile** as you need.
 4. Execute command `make` in the directory.
 
-## Localization
+## How to localize
 1. Copy **gerbv.pot** to a file named ***&lt;lang&gt;***__.po__, where *&lt;lang&gt;* is a *[Language Code](https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html)*.
 2. Edit translations in ***&lt;lang&gt;***__.po__ and save it using UTF-8 encoding.
 3. Execute __msgfmt__ ***&lt;lang&gt;***__.po -o gerbv.mo__ in MSYS2.
