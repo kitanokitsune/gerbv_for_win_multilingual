@@ -1,4 +1,4 @@
-# Gerbv-2.10.0 for windows multilingual -- build tools
+# Gerbv-2.10.0 for windows multilingual -- executable and build tool
 ---------------------------------------------
 ## What is this
 This is a build tool for [Gerbv-2.10.0](https://github.com/gerbv/gerbv) executable on MS-Windows.  
@@ -19,8 +19,8 @@ If you want to build __gerbv__ yourself, the followings are required.
 + [gtk+-2.24.33](https://github.com/kitanokitsune/gtk2.24-win-static-library-builder/releases) library
 
 ## How to build Gerbv-2.10.0 for win multilingual
-1. Extract or `git pull` this project into some directory.
-2. Put **dxflib-3.26.4-src.tar.gz** and **gerbv-2.10.0.tar.gz** into the above directory.
+1. Extract or `git clone` this project into some directory.
+2. Put **gerbv-2.10.0.tar.gz** and **dxflib-3.26.4-src.tar.gz** into the above directory.
 3. Edit **Makefile** as you need.
 4. Execute command `make` in the directory.
 
@@ -29,3 +29,5 @@ If you want to build __gerbv__ yourself, the followings are required.
 2. Edit translations in ***&lt;lang&gt;***__.po__ and save it using UTF-8 encoding.
 3. Execute __msgfmt__ ***&lt;lang&gt;***__.po -o gerbv.mo__ in MSYS2.
 4. Copy __gerbv.mo__ into &lt;*gerb_folder*&gt;\\share\\locale\\&lt;*lang*&gt;\\LC_MESSAGES\\.
+
+I've never used but there's a tool called [Poedit](https://poedit.net/), which can handle **.po** files.
